@@ -32,6 +32,21 @@ dockerExposedPorts := Seq(9000, 9443)
 
 dockerExposedVolumes := Seq("/opt/docker/logs")
 
+
+credentials += Credentials(
+Path.userHome / ".lightbend" / "commercial.credentials")
+
+resolvers += Resolver.url(
+	"lightbend-commercial-releases",
+	new URL("http://repo.lightbend.com/commercial-releases/"))(
+	Resolver.ivyStylePatterns)
+
+libraryDependencies += compilerPlugin(
+"com.lightbend" %% "scala-fortify" % "aa07381f" classifier "assembly")
+
+scalacOptions += s"-P:fortify:build=sampleroom-scala"
+
+
 //TwirlKeys.templateImports += "com.ilanpillemer.controllers._"
 
 // Adds additional packages into conf/routes
